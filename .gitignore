@@ -1,0 +1,32 @@
+# Compiled Object files
+*.o
+*.a
+*.elf
+*.bin
+*.hex
+*.uf2
+*.map
+*.eep
+
+# Arduino build folders (created when compiling)
+build/
+out/
+Release/
+Debug/
+
+# Temporary and backup files
+*.tmp
+*.bak
+*~
+
+# VS Code workspace settings (if you use VS Code)
+.vscode/
+
+# OS-generated files (Windows / macOS clutter)
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
