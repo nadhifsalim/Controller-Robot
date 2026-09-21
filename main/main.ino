@@ -1,17 +1,12 @@
 #include <Bluepad32.h>
 
-// in1 & in2 right motor
 #define IN1 27
 #define IN2 26
-// in3 & in4 left motor
 #define IN3 25
 #define IN4 33
-//ena = right & enb = left
+
 #define ENA 14
 #define ENB 32
-
-int targetL = 0;
-int targetR = 0;
 
 ControllerPtr myControllers[BP32_MAX_GAMEPADS];
 
@@ -52,69 +47,60 @@ void onDisconnectedController(ControllerPtr ctl) {
 
 void rotatemotor(int LEFT, int RIGHT){
 
-    if (RIGHT > 0){ //FORWARD
+    if (RIGHT > 0){ 
         digitalWrite(IN1, HIGH);
         digitalWrite(IN2, LOW);
-        // L_motor = 'F';
-    } else if (RIGHT < 0){ //BACKWARD
+    } else if (RIGHT < 0){ 
         digitalWrite(IN1, LOW);
         digitalWrite(IN2, HIGH);
-        // L_motor = 'B';
-    } else{ //STOP
+    } else{ 
         digitalWrite(IN1, LOW);
         digitalWrite(IN2, LOW); 
-        // L_motor = 'S';
     }
-    //right motor
-    if (LEFT > 0){ //FORWARD
+    if (LEFT > 0){ 
         digitalWrite(IN3, HIGH);
         digitalWrite(IN4, LOW);
-        // R_motor = 'F';
-    } else if (LEFT < 0){ //BACKWARD
+    } else if (LEFT < 0){ 
         digitalWrite(IN3, LOW);
         digitalWrite(IN4, HIGH);
-        // R_motor = 'B';
-    } else{ //STOP
+    } else{ 
         digitalWrite(IN3, LOW);
         digitalWrite(IN4, LOW);
-        // R_motor = 'S';
     }
 
-    ledcWrite(0, abs(RIGHT));
-    ledcWrite(1, abs(LEFT));
+    analogWrite(ENA, abs(RIGHT));
+    analogWrite(ENB, abs(LEFT));
 }
 
 void processGamepad(ControllerPtr ctl) {
     int absis = ctl->axisX();
     int ordinat = ctl->axisY();
 
-    int dead = 10; //deadpoint of controller
+    int dead = 10;
     if (abs(absis)<dead) absis = 0;
     if (abs(ordinat)<dead) ordinat = 0;
         
-    float upd_absis = 0.0f;
-    float upd_ordinat = 0.0f;
     if (absis > 0){
-        upd_absis = (float)absis/512.0f;
+        absis = (float)absis/512.0f;
     } else{
-        upd_absis = (float)absis/508.0f;
+        absis = (float)absis/508.0f;
     }
     if (ordinat > 0){
-        upd_ordinat = (float)ordinat/-512.0f;
+        ordinat = (float)ordinat/-512.0f;
     } else{
-        upd_ordinat = (float)ordinat/-508.0f;
+        ordinat = (float)ordinat/-508.0f;
     }
 
-    upd_absis = upd_absis * upd_absis * upd_absis; 
-    upd_ordinat = upd_ordinat * upd_ordinat * upd_ordinat; 
+    absis = absis * absis * absis; 
+    ordinat = ordinat * ordinat * ordinat; 
 
-    float upd_l_motor = constrain(upd_ordinat + upd_absis, -1, 1);
-    float upd_r_motor = constrain(upd_ordinat - upd_absis, -1, 1);
+    float right_motor = constrain(ordinat + absis, -1, 1);
+    float left_motor = constrain(ordinat - absis, -1, 1);
 
-    targetL = constrain(upd_l_motor*255, -255, 255);
-    targetR = constrain(upd_r_motor*255, -255, 255);
+    right_motor = constrain(right_motor*255, -255, 255);
+    left_motor = constrain(upd_r_motor*255, -255, 255);
 
-    rotatemotor(targetL, targetR);
+    rotatemotor(right_motor, left_motor);
 }
 
 void processControllers() {
@@ -134,10 +120,6 @@ void setup() {
     pinMode(IN2, OUTPUT);
     pinMode(IN3, OUTPUT);
     pinMode(IN4, OUTPUT);
-    ledcSetup(0, 5000, 8);
-    ledcAttachPin(ENA, 0);
-    ledcSetup(1, 5000, 8);
-    ledcAttachPin(ENB, 1);
 
     Serial.begin(115200);
 
