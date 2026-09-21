@@ -111,8 +111,8 @@ void processGamepad(ControllerPtr ctl) {
     float upd_l_motor = constrain(upd_ordinat + upd_absis, -1, 1);
     float upd_r_motor = constrain(upd_ordinat - upd_absis, -1, 1);
 
-    targetL = constrain(upd_l_motor*MAX_TICK, -MAX_TICK, MAX_TICK);
-    targetR = constrain(upd_r_motor*MAX_TICK, -MAX_TICK, MAX_TICK);
+    targetL = constrain(upd_l_motor*255, -255, 255);
+    targetR = constrain(upd_r_motor*255, -255, 255);
 
     rotatemotor(targetL, targetR);
 }
@@ -129,7 +129,7 @@ void processControllers() {
     }
 }
 
-    void setup() {
+void setup() {
     pinMode(IN1, OUTPUT);
     pinMode(IN2, OUTPUT);
     pinMode(IN3, OUTPUT);
