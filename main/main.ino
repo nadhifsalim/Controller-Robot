@@ -73,8 +73,8 @@ void rotatemotor(int LEFT, int RIGHT){
 }
 
 void processGamepad(ControllerPtr ctl) {
-    int absis = ctl->axisX();
-    int ordinat = ctl->axisY();
+    float absis = ctl->axisX();
+    float ordinat = ctl->axisY();
 
     int dead = 10;
     if (abs(absis)<dead) absis = 0;
@@ -98,9 +98,9 @@ void processGamepad(ControllerPtr ctl) {
     float left_motor = constrain(ordinat - absis, -1, 1);
 
     right_motor = constrain(right_motor*255, -255, 255);
-    left_motor = constrain(upd_r_motor*255, -255, 255);
+    left_motor = constrain(left_motor*255, -255, 255);
 
-    rotatemotor(right_motor, left_motor);
+    rotatemotor(left_motor, right_motor);
 }
 
 void processControllers() {
@@ -120,6 +120,8 @@ void setup() {
     pinMode(IN2, OUTPUT);
     pinMode(IN3, OUTPUT);
     pinMode(IN4, OUTPUT);
+    pinMode(ENA, OUTPUT);
+    pinMode(ENB, OUTPUT);
 
     Serial.begin(115200);
 
