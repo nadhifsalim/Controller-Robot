@@ -1,8 +1,6 @@
 # Wireless Gamepad-Controlled Robot
 
-Welcome to the **Controller-Robot** repository! This project demonstrates how to build and program a remote-controlled robot using a standard Bluetooth gamepad (like a PlayStation 4/5, Xbox One, or Nintendo Switch Pro controller). 
-
-This repository is designed with education in mind. Whether you are a beginner looking to understand wireless communication or a hobbyist building your first RC rover, this guide will walk you through the software and logic behind connecting a commercial gamepad to a microcontroller.
+This project demonstrates how to build and program a remote-controlled robot using a standard Bluetooth gamepad (like a PlayStation 4/5, Xbox One, or Nintendo Switch Pro controller). 
 
 ---
 
@@ -23,12 +21,12 @@ To compile and upload the code to your robot, you will need to set up your devel
 
 While you can run the code just to test the controller connection, you will need the following hardware to build the actual robot:
 
-*   **ESP32 Development Board** (The "brain" with built-in Bluetooth)
-*   **Motor Driver Module** (e.g., L298N or TB6612FNG)
-*   **2x or 4x DC Motors with Wheels**
-*   **Robot Chassis**
-*   **Power Source** (e.g., 18650 Li-ion batteries)
-*   **A compatible Bluetooth Gamepad** (PS4, PS5, Xbox, Switch Pro)
+*   **ESP32 Development Board** 
+*   **Motor Driver Module** (ex: L298N)
+*   **2x or 4x DC Motors with Wheels** 
+*   **Robot Chassis** 
+*   **Power Source** (the minimum voltage is 12V)
+*   **A compatible Bluetooth Gamepad** (ex: ps4 controller)
 
 ---
 
